@@ -1,1 +1,1 @@
-export const PORT = 4000;
+export const PORT = 4000;  // port 4000 for backend
