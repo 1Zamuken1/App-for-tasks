@@ -1,16 +1,7 @@
-import React from 'react';
-import { deleteTaskRequest } from '../api/tasks.api';
+import { useTasks } from "../context/TaskProvider";
+export default function TaskCard( {task} ) {
 
-export default function taskCard( {task} ) {
-
-    const handleDelete = async (id)=>{
-        try {
-            const respone = await deleteTaskRequest(id);
-            console.log(respone);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+  const {deleteTask} = useTasks();
 
   return (
     <div>
@@ -19,7 +10,7 @@ export default function taskCard( {task} ) {
         <span>{ task.done == 1 ? "✔️" : "❌" }</span>
         <span>{ task.createAt }</span>
 
-        <button onClick={() => handleDelete(task.id)}>Delete</button>
+        <button onClick={() => deleteTask(task.id)}>Delete</button>
         <button>Edit</button>
     </div>
   );

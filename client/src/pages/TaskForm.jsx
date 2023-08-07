@@ -1,7 +1,10 @@
 import { Form, Formik } from 'formik';
-import { CreateTaskRequest } from '../api/tasks.api';
+import { useTasks } from '../context/TaskProvider';
 
 function TaskForm(){
+
+    const {createTask} = useTasks()
+
     return(
         <div>
             <Formik
@@ -11,14 +14,8 @@ function TaskForm(){
                 }
                 onSubmit={ async (values, actions) => {
                     console.log(values);
-                    try {
-                        const response = await CreateTaskRequest(values);
-                        console.log(response);
-                        actions.resetForm();
-                    } catch (error) {
-                        console.error(error);
-                        
-                    }
+                    createTask(values)
+                actions.resetForm();
                 }}
             >
                 {({handleChange, handleSubmit, values, isSubmitting}) => (
