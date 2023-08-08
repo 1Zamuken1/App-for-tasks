@@ -1,5 +1,11 @@
 import { createContext, useContext, useState } from "react";
-import { getTaskRequest, deleteTaskRequest, CreateTaskRequest } from "../api/tasks.api";
+import { 
+    getTasksRequest, 
+    deleteTaskRequest, 
+    CreateTaskRequest, 
+    getTaskRequest,
+    updateTaskRequest 
+} from "../api/tasks.api";
 import { TaskContext } from "./TaskContext";
 export const useTasks = () =>{
     const context = useContext(TaskContext);
@@ -11,14 +17,13 @@ export const useTasks = () =>{
 export const TaskContextProvider = ({ children }) => {
     const [tasks, setTasks] = useState([]);
 
-    // function load
+    // Load function
     async function loadTasks() {
-        const response = await getTaskRequest();
+        const response = await getTasksRequest();
         setTasks(response.data);
     }
 
-    // function delete
-
+    // Delete function
     const deleteTask = async (id)=>{
         try {
             const response = await deleteTaskRequest(id);
@@ -28,7 +33,7 @@ export const TaskContextProvider = ({ children }) => {
         }
     };
 
-    // function create
+    // Create function
     const createTask = async (task) => {
         try {
             const response = await CreateTaskRequest(task);
@@ -39,8 +44,27 @@ export const TaskContextProvider = ({ children }) => {
         }
     }
 
+    // Update function
+    const getTask = async (id) =>{
+        try {
+            const response = await getTaskRequest(id);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const updateTask = async (id, newFields) => {
+        try {
+            const response = await updateTaskRequest(id, newFields);
+            console.log(response);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return(
-    <TaskContext.Provider value={{ tasks, loadTasks, deleteTask, createTask }}>
+    <TaskContext.Provider value={{ tasks, loadTasks, deleteTask, createTask, getTask, updateTask }}>
         { children }
     </TaskContext.Provider>);
 }
