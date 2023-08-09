@@ -4,7 +4,8 @@ import {
     deleteTaskRequest, 
     CreateTaskRequest, 
     getTaskRequest,
-    updateTaskRequest 
+    updateTaskRequest ,
+    toggleTaskDoneRequest
 } from "../api/tasks.api";
 import { TaskContext } from "./TaskContext";
 export const useTasks = () =>{
@@ -21,7 +22,7 @@ export const TaskContextProvider = ({ children }) => {
     async function loadTasks() {
         const response = await getTasksRequest();
         setTasks(response.data);
-    }
+    };
 
     // Delete function
     const deleteTask = async (id)=>{
@@ -42,9 +43,9 @@ export const TaskContextProvider = ({ children }) => {
             console.error(error);
             
         }
-    }
+    };
 
-    // Update function
+    // Get function
     const getTask = async (id) =>{
         try {
             const response = await getTaskRequest(id);
@@ -54,6 +55,7 @@ export const TaskContextProvider = ({ children }) => {
         }
     };
 
+    // Update function
     const updateTask = async (id, newFields) => {
         try {
             const response = await updateTaskRequest(id, newFields);
@@ -61,10 +63,33 @@ export const TaskContextProvider = ({ children }) => {
         } catch (error) {
             console.error(error);
         }
-    }
+    };
 
+    // Done function
+    const toggleTaskDone = async (id) => {
+        try {
+        const taskFound = tasks.find((task) => task.id == id);
+        await toggleTaskDoneRequest(id, taskFound.done == 0 ? true: false);
+        setTasks(
+            tasks.map((task) =>
+                task.id == id ? { ... task, done: !taskFound.done } : task
+            )
+        );
+        } catch (error) {
+            console.error(error);
+        }
+    };
     return(
-    <TaskContext.Provider value={{ tasks, loadTasks, deleteTask, createTask, getTask, updateTask }}>
+    <TaskContext.Provider 
+    value={{ 
+            tasks, 
+            loadTasks, 
+            deleteTask, 
+            createTask, 
+            getTask, 
+            updateTask, 
+            toggleTaskDone 
+        }}>
         { children }
     </TaskContext.Provider>);
 }
