@@ -35,7 +35,7 @@ Later we will install the dependencies through npm, for this we must execute ins
 
 > $npm i express mysql2 morgan
 
-> $npm i nodemon
+> $npm i nodemon -D
 
 > $ npm i react-routerdom@6
 
