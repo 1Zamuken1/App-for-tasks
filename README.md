@@ -37,8 +37,6 @@ Later we will install the dependencies through npm, for this we must execute ins
 
 > $npm i nodemon -D
 
-> $ npm i react-routerdom@6
-
 > $ npm i axis
 
 > $ npm i cors
@@ -49,8 +47,10 @@ Then, we proceed to enter the "client" folder through the command
 
 and there we execute:
 
-> npm i formik
+> $ npm i react-routerdom@6
 
->npm i tailwind
+> $ npm i formik
+
+> $ npm i tailwind
 
 After this, everything will be ready to make the changes you want.
