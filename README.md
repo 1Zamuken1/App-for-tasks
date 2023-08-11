@@ -33,7 +33,9 @@ Once executed, it will create the "node_modules" folder; which will have the thi
 
 Later we will install the dependencies through npm, for this we must execute inside the "App-for-tasks" folder:
 
-> $npm and nodemon
+> $npm i express mysql2 morgan
+
+> $npm i nodemon
 
 > $ npm i react-routerdom@6
 
